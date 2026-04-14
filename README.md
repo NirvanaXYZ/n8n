@@ -18,7 +18,7 @@ Google Drive video → AI generates title + caption → auto posts to YouTube + 
 - Explored n8n template library
 - Found perfect template: "From Google Drive to Instagram, TikTok & YouTube with AI descriptions"
 - Learned how the workflow works: Google Drive trigger → AI generates description → posts to all 3 platforms automatically
-- Set up Airtable for Project 1 (Metdesigners) with video tracking table
-- Set up Airtable for Project 2 (Love) with video tracking table
+- Set up Airtable for Project 1 (M) with video tracking table
+- Set up Airtable for Project 2 (L) with video tracking table
 - Stack decided: n8n + Google Gemini (free) + Airtable + direct APIs
 - Total cost: $0
