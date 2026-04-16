@@ -22,3 +22,15 @@ Google Drive video → AI generates title + caption → auto posts to YouTube + 
 - Set up Airtable for Project 2 (L) with video tracking table
 - Stack decided: n8n + Google Gemini (free) + Airtable + direct APIs
 - Total cost: $0
+
+
+## Day 3 — April 16, 2026
+- Loaded template "From Google Drive to Instagram, TikTok & YouTube with AI descriptions" into n8n
+- Set up Google Cloud project (M & L) with OAuth2
+- Enabled Google Drive API in Google Cloud Console
+- Configured OAuth consent screen and added test user
+- Fixed 403 access_denied error by adding Gmail to test users
+- Successfully connected Google Drive OAuth2 credential in n8n
+- Created Airtable Personal Access Token and connected it in n8n
+- Template fully loaded with credentials set up for M project
+- Next: swap OpenAI node for Gemini and map all workflow nodes
