@@ -35,7 +35,7 @@ Google Drive video → AI generates title + caption → auto posts to YouTube + 
 - Template fully loaded with credentials set up for M project
 - Next: swap OpenAI node for Gemini and map all workflow nodes
 
-- ## Day 4 — April 27, 2026
+- ## Day 4 — April 17, 2026
 - Deleted OpenAI node and replaced it with Google Gemini (Message a model)
 - Selected Gemini model manually by ID: gemini-1.5-flash (not in dropdown list)
 - Wrote social media prompt for Instagram, TikTok and YouTube captions
