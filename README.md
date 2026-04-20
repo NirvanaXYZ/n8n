@@ -34,3 +34,25 @@ Google Drive video → AI generates title + caption → auto posts to YouTube + 
 - Created Airtable Personal Access Token and connected it in n8n
 - Template fully loaded with credentials set up for M project
 - Next: swap OpenAI node for Gemini and map all workflow nodes
+
+- ## Day 4 — April 27, 2026
+- Deleted OpenAI node and replaced it with Google Gemini (Message a model)
+- Selected Gemini model manually by ID: gemini-1.5-flash (not in dropdown list)
+- Wrote social media prompt for Instagram, TikTok and YouTube captions
+- Fixed Set Variables node: cleaned up Airtable IDs that were corrupted by Airtable AI assistant
+- Configured Create Airtable Record node with all 9 field mappings:
+  - Video Name, Status, Google Drive Link, File ID, Upload Date
+  - Description (from Gemini output), Instagram Status, TikTok Status, YouTube Status
+- Next: finish remaining nodes (Edit Airtable Fields, Update with Description, upload nodes)
+
+## Day 5 — April 20, 2026
+- Discovered old Airtable node version hides field labels causing silent failures
+- Replaced "Create Airtable Record" with new "Create a record" node
+- Fixed Airtable Personal Access Token — base was missing from token access
+- New node loaded all Airtable columns automatically with proper labels and dropdowns
+- Configured all 9 fields correctly in new Create a record node
+- Fixed "Edit Airtable Fields1" — corrected wrong node references from
+  "Google Drive" → "Read video from Google Drive"
+- Replaced old "Update Airtable with Description" with new "Update record" node
+- Configured Update record node with all fields including record ID chaining
+- Next: Instagram, TikTok, YouTube upload nodes + full workflow test
