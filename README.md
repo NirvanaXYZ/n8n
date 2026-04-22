@@ -70,17 +70,17 @@ Google Drive video → AI generates title + caption → auto posts to YouTube + 
 **Creating the TikTok Developer App:**
 - Went to developers.tiktok.com
 - Created app with ownership type: Individual
-- App name: Metdesigners
+- App name: M
 - App type: Other (covers Content Posting API)
 
 **Domain Verification problems:**
 - App requires verified Terms of Service URL and Privacy Policy URL
 - Tried using Instagram profile URL — rejected (not verified)
-- Tried using metdesigners.art — got "Invalid domain" error because included https://
+- Tried using project domain — got "Invalid domain" error because included https://
 - Discovered two verification methods: URL prefix (needs file upload) and Domain (DNS record)
 - URL prefix method failed — needed FTP/hosting access to upload verification file
 - Switched to Domain verification via DNS TXT record
-- Went to get.art (domain registrar) → DNS Management → Manage TXT Records
+- Went to domain registrar (get.art) → DNS Management → Manage TXT Records
 - Added TXT record with Host: @ and Value: tiktok-developers-site-verification code
 - Domain verified successfully ✅
 
@@ -92,7 +92,7 @@ Google Drive video → AI generates title + caption → auto posts to YouTube + 
   - user.info.basic (included in Login Kit)
   - video.publish (included in Content Posting API - Direct Post)
   - video.upload (included in Content Posting API)
-- Set Redirect URI: https://metdesigners.art
+- Set Redirect URI to project domain
 
 **App Review submission:**
 - Filled app description explaining n8n automation workflow
