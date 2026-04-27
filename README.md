@@ -159,7 +159,7 @@ Youtube URL column does not exist in Airtable table — skipped
 
 
 
-## Day 6 — April 27, 2026
+## Day 8 — April 27, 2026
 Goal: Complete X (Twitter) & Pinterest Nodes + Attempt Instagram API Setup
 Adding new Airtable columns:
 
