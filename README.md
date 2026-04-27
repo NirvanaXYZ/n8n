@@ -109,118 +109,187 @@ Google Drive video → AI generates title + caption → auto posts to YouTube + 
 - Then Instagram upload node
 - Come back to TikTok node once approved
 
+8 github · MDCopyDay 7 — April 24, 2026
+Goal: Replace YouTube Upload Node & Fix Airtable Nodes in YouTube Row
+Replacing the YouTube Upload Node:
+
+Original node used upload-post.com (paid service — not available)
+Deleted old HTTP Request node pointing to upload-post.com API
+Added native n8n YouTube node (YouTube → Upload a video)
+Enabled YouTube Data API v3 in Google Cloud Console (existing project)
+Reused existing OAuth 2.0 Client — added n8n OAuth Callback URI
+Connected YouTube OAuth2 credential inside n8n successfully
+
+YouTube node configuration:
+
+Operation: Upload
+Title: dynamic from Set Variables node
+Input Binary Field: datavideo (binary data from Read Video for YouTube node)
+Category: Education
+Region Code: US (required field — cannot be left empty)
+Description: dynamic from Set Variables node
+Privacy Status: Public
+
+Edit Airtable Fields 3 (Set Node):
+
+Reviewed node — already correctly configured, no changes needed
+Contains: ID, YouTube Status, Youtube URL fields
+Note: This is a Set node, not an Airtable node — no replacement needed
+
+Replacing Update YouTube Status - Success Node:
+
+Old node had broken expressions referencing deleted nodes
+Replaced with new Airtable → Update record node (new version auto-loads columns)
+Base: selected from list
+Table: Videos
+Columns to match on: id
+YouTube Status: Posted
+
+Challenges faced:
+
+YouTube OAuth2 does not reuse Google Drive credentials — requires separate credential setup
+YouTube Data API v3 must be enabled separately in Google Cloud Console
+Old expressions referenced "Update Airtable with Description" node which no longer exists in workflow
+New Airtable node uses dropdown for YouTube Status instead of free text — correct value: Posted
+Youtube URL column does not exist in Airtable table — skipped
+
+
+
+
+Day 7 — April 24, 2026
+Goal: Replace YouTube Upload Node & Fix Airtable Nodes in YouTube Row
+Replacing the YouTube Upload Node:
+
+Original node used upload-post.com (paid service — not available)
+Deleted old HTTP Request node pointing to upload-post.com API
+Added native n8n YouTube node (YouTube → Upload a video)
+Enabled YouTube Data API v3 in Google Cloud Console (existing project)
+Reused existing OAuth 2.0 Client — added n8n OAuth Callback URI
+Connected YouTube OAuth2 credential inside n8n successfully
+
+YouTube node configuration:
+
+Operation: Upload
+Title: dynamic from Set Variables node
+Input Binary Field: datavideo (binary data from Read Video for YouTube node)
+Category: Education
+Region Code: US (required field — cannot be left empty)
+Description: dynamic from Set Variables node
+Privacy Status: Public
+
+Edit Airtable Fields 3 (Set Node):
+
+Reviewed node — already correctly configured, no changes needed
+Contains: ID, YouTube Status, Youtube URL fields
+Note: This is a Set node, not an Airtable node — no replacement needed
+
+Replacing Update YouTube Status - Success Node:
+
+Old node had broken expressions referencing deleted nodes
+Replaced with new Airtable → Update record node (new version auto-loads columns)
+Base: selected from list
+Table: Videos
+Columns to match on: id
+YouTube Status: Posted
+
+Challenges faced:
+
+YouTube OAuth2 does not reuse Google Drive credentials — requires separate credential setup
+YouTube Data API v3 must be enabled separately in Google Cloud Console
+Old expressions referenced "Update Airtable with Description" node which no longer exists in workflow
+New Airtable node uses dropdown for YouTube Status instead of free text — correct value: Posted
+Youtube URL column does not exist in Airtable table — skipped
+
+
+
+
+
+
 Day 8 — April 27, 2026
 Goal: Complete X (Twitter) & Pinterest Nodes + Attempt Instagram API Setup
+Adding new Airtable columns:
 
-X (Twitter) Node — Completed ✅
-Setting up X Developer Account:
+Added X Status — Single Select (Pending, Posted, Failed)
+Added Pinterest Status — Single Select (Pending, Posted, Failed)
+Added TikTok URL — URL type
+Added YouTube URL — URL type
+Added Instagram URL — URL type
+Added X URL — URL type
+Added Pinterest URL — URL type
+
+Setting up X (Twitter) Developer Account:
 
 Went to console.x.com and registered developer account
-Created a new app for the automation project
+Created new app for the automation project
 Set App permissions to Read and Write
 Set Type of App to Web App, Automated App or Bot
-Added n8n OAuth Callback URI in the app settings
+Added n8n OAuth Callback URI in app settings
 Generated OAuth 2.0 Client ID and Client Secret
 Connected credential inside n8n successfully
 
-Nodes added to workflow:
+X (Twitter) nodes added:
 
 Create Tweet — X native n8n node
-Edit Airtable Fields X — Set node
+Edit Airtable Fields X — Set node (ID, X Status, X URL)
 Update X Status — Airtable Update Record node
 
 Tweet content template:
-[Video Title]
-[AI Generated Description]
-🎥 Watch on YouTube: [YouTube URL]
-#hashtag1 #hashtag2 #hashtag3
-Important note: X API free plan does NOT support video upload. We post a text tweet with YouTube link instead. Video upload requires Basic paid plan ($100/month).
-Challenge — X Access Token was Read-only:
 
-Initial token only had Read permissions
-Had to go to Authentication Settings, change to "Read and Write", then regenerate token
+Video title from Set Variables node
+AI generated description from Set Variables node
+YouTube video link
+Hashtags: #M #aifashion #design
 
-Challenge — YouTube URL not accessible from X branch:
+Important note: X API free plan does NOT support video upload — post text tweet with YouTube link instead. Video upload requires Basic paid plan ($100/month)
+X Challenges faced:
 
-X branch splits from "Update record" node and cannot directly access the YouTube upload node output
-Fixed by referencing the YouTube Status update node output instead
+Initial Access Token was Read-only — had to change App permissions to Read and Write and regenerate token
+YouTube URL not accessible from X branch (different workflow branch) — fixed by referencing YouTube Status update node output instead of YouTube upload node directly
 
-
-Pinterest Node — Completed ✅
 Setting up Pinterest:
 
 Converted Pinterest account from Personal to Business (Content Creator type)
-Went to developers.pinterest.com and created a new app
+Went to developers.pinterest.com and created new app
 Trial access approved immediately
 Added n8n OAuth Callback URI in Redirect URIs
 Generated access token (Production Limited)
-Created a dedicated Pinterest board for video content
+Created dedicated Pinterest board for video content
 
-Important note: n8n does NOT have a native Pinterest node — used HTTP Request node instead
-Nodes added to workflow:
+Pinterest nodes added:
 
-Create Pinterest Pin — HTTP Request node
-Edit Airtable Fields Pinterest — Set node
+Create Pinterest Pin — HTTP Request node (no native Pinterest node in n8n)
+Edit Airtable Fields Pinterest — Set node (ID, Pinterest Status, Pinterest URL)
 Update Pinterest Status — Airtable Update Record node
 
-Create Pinterest Pin configuration:
-
-Method: POST
-URL: https://api.pinterest.com/v5/pins
-Authentication: Generic Credential Type → Header Auth
-Header: Authorization: Bearer [token]
-
-Pin content strategy:
+Pinterest pin strategy:
 
 Pinterest Trial API does NOT support video upload
 Used YouTube thumbnail as pin image: https://img.youtube.com/vi/[VIDEO_ID]/maxresdefault.jpg
 Pin links directly to YouTube video
-This approach is more visual and gets better engagement than a plain link
+More visual approach — better engagement than plain link
 
-Challenge — No native Pinterest node in n8n:
+Pinterest Challenges faced:
 
-Had to manually configure HTTP Request node with Header Auth
-Board ID format must be username/board-slug not a numeric ID
+No native Pinterest node in n8n — had to use HTTP Request node with manual Header Auth
+Board ID must be in username/board-slug format not numeric ID
+Trial access has limited scopes — write access requires proper OAuth flow
 
-Challenge — Pinterest Trial API limitations:
+Instagram API — BLOCKED ❌
 
-Trial access only provides limited read scopes by default
-Write access for creating pins requires proper OAuth flow with write scopes
-Video upload requires Standard access approval
+Instagram video upload via Meta Graph API requires verified Facebook Developer account
+Confirmed: Instagram account is Business type ✅
+Confirmed: Instagram connected to Facebook Page ✅
+SMS verification failed — codes not received reliably
+Virtual/temporary phone numbers blocked by Meta entirely
+Credit card verification not available for this account
+business.facebook.com → Apps → Create new app ID button was greyed out
+Root cause: Meta blocks all alternative verification methods — requires a real verified phone number
 
-
-Instagram Node — BLOCKED ❌
-Instagram video upload via Meta Graph API requires a verified Facebook Developer account. Spent significant time trying to complete verification but hit multiple blockers.
-What was confirmed working:
-
-Instagram account is a Business account ✅
-Instagram account is connected to Facebook Page ✅
-
-Verification attempts that failed:
-
-SMS verification — codes not received reliably
-Virtual/temporary phone numbers — blocked by Meta
-Credit card verification — not available for this account type
-business.facebook.com → Apps → "Create new app ID" was greyed out (requires verified developer account first)
-
-Root cause: Facebook Developer registration requires SMS verification to a real phone number linked to the Facebook account. Meta blocks virtual/temporary numbers entirely.
-Workaround options for next session:
+Workarounds to try next session:
 
 Try verification using Facebook mobile app
 Try a different real phone number
 Try credit card verification if it becomes available
-
-
-Airtable Updates
-Added 7 new columns to Videos table to track all platforms:
-
-X Status — Single Select (Pending, Posted, Failed)
-Pinterest Status — Single Select (Pending, Posted, Failed)
-TikTok URL — URL
-YouTube URL — URL
-Instagram URL — URL
-X URL — URL
-Pinterest URL — URL
 
 
 Current Workflow Status
