@@ -108,3 +108,120 @@ Google Drive video → AI generates title + caption → auto posts to YouTube + 
 - Continue with YouTube upload node (free, already have Google OAuth)
 - Then Instagram upload node
 - Come back to TikTok node once approved
+
+Day 8 — April 27, 2026
+Goal: Complete X (Twitter) & Pinterest Nodes + Attempt Instagram API Setup
+
+X (Twitter) Node — Completed ✅
+Setting up X Developer Account:
+
+Went to console.x.com and registered developer account
+Created a new app for the automation project
+Set App permissions to Read and Write
+Set Type of App to Web App, Automated App or Bot
+Added n8n OAuth Callback URI in the app settings
+Generated OAuth 2.0 Client ID and Client Secret
+Connected credential inside n8n successfully
+
+Nodes added to workflow:
+
+Create Tweet — X native n8n node
+Edit Airtable Fields X — Set node
+Update X Status — Airtable Update Record node
+
+Tweet content template:
+[Video Title]
+[AI Generated Description]
+🎥 Watch on YouTube: [YouTube URL]
+#hashtag1 #hashtag2 #hashtag3
+Important note: X API free plan does NOT support video upload. We post a text tweet with YouTube link instead. Video upload requires Basic paid plan ($100/month).
+Challenge — X Access Token was Read-only:
+
+Initial token only had Read permissions
+Had to go to Authentication Settings, change to "Read and Write", then regenerate token
+
+Challenge — YouTube URL not accessible from X branch:
+
+X branch splits from "Update record" node and cannot directly access the YouTube upload node output
+Fixed by referencing the YouTube Status update node output instead
+
+
+Pinterest Node — Completed ✅
+Setting up Pinterest:
+
+Converted Pinterest account from Personal to Business (Content Creator type)
+Went to developers.pinterest.com and created a new app
+Trial access approved immediately
+Added n8n OAuth Callback URI in Redirect URIs
+Generated access token (Production Limited)
+Created a dedicated Pinterest board for video content
+
+Important note: n8n does NOT have a native Pinterest node — used HTTP Request node instead
+Nodes added to workflow:
+
+Create Pinterest Pin — HTTP Request node
+Edit Airtable Fields Pinterest — Set node
+Update Pinterest Status — Airtable Update Record node
+
+Create Pinterest Pin configuration:
+
+Method: POST
+URL: https://api.pinterest.com/v5/pins
+Authentication: Generic Credential Type → Header Auth
+Header: Authorization: Bearer [token]
+
+Pin content strategy:
+
+Pinterest Trial API does NOT support video upload
+Used YouTube thumbnail as pin image: https://img.youtube.com/vi/[VIDEO_ID]/maxresdefault.jpg
+Pin links directly to YouTube video
+This approach is more visual and gets better engagement than a plain link
+
+Challenge — No native Pinterest node in n8n:
+
+Had to manually configure HTTP Request node with Header Auth
+Board ID format must be username/board-slug not a numeric ID
+
+Challenge — Pinterest Trial API limitations:
+
+Trial access only provides limited read scopes by default
+Write access for creating pins requires proper OAuth flow with write scopes
+Video upload requires Standard access approval
+
+
+Instagram Node — BLOCKED ❌
+Instagram video upload via Meta Graph API requires a verified Facebook Developer account. Spent significant time trying to complete verification but hit multiple blockers.
+What was confirmed working:
+
+Instagram account is a Business account ✅
+Instagram account is connected to Facebook Page ✅
+
+Verification attempts that failed:
+
+SMS verification — codes not received reliably
+Virtual/temporary phone numbers — blocked by Meta
+Credit card verification — not available for this account type
+business.facebook.com → Apps → "Create new app ID" was greyed out (requires verified developer account first)
+
+Root cause: Facebook Developer registration requires SMS verification to a real phone number linked to the Facebook account. Meta blocks virtual/temporary numbers entirely.
+Workaround options for next session:
+
+Try verification using Facebook mobile app
+Try a different real phone number
+Try credit card verification if it becomes available
+
+
+Airtable Updates
+Added 7 new columns to Videos table to track all platforms:
+
+X Status — Single Select (Pending, Posted, Failed)
+Pinterest Status — Single Select (Pending, Posted, Failed)
+TikTok URL — URL
+YouTube URL — URL
+Instagram URL — URL
+X URL — URL
+Pinterest URL — URL
+
+
+Current Workflow Status
+PlatformStatusYouTube✅ CompleteX (Twitter)✅ CompletePinterest✅ CompleteInstagram❌ Blocked — Meta API verificationTikTok⏳ Waiting for API review approval
