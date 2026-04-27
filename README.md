@@ -109,7 +109,8 @@ Google Drive video → AI generates title + caption → auto posts to YouTube + 
 - Then Instagram upload node
 - Come back to TikTok node once approved
 
-8 github · MDCopyDay 7 — April 24, 2026
+
+## Day 7 — April 24, 2026
 Goal: Replace YouTube Upload Node & Fix Airtable Nodes in YouTube Row
 Replacing the YouTube Upload Node:
 
@@ -154,56 +155,11 @@ New Airtable node uses dropdown for YouTube Status instead of free text — corr
 Youtube URL column does not exist in Airtable table — skipped
 
 
-Day 7 — April 24, 2026
-Goal: Replace YouTube Upload Node & Fix Airtable Nodes in YouTube Row
-Replacing the YouTube Upload Node:
-
-Original node used upload-post.com (paid service — not available)
-Deleted old HTTP Request node pointing to upload-post.com API
-Added native n8n YouTube node (YouTube → Upload a video)
-Enabled YouTube Data API v3 in Google Cloud Console (existing project)
-Reused existing OAuth 2.0 Client — added n8n OAuth Callback URI
-Connected YouTube OAuth2 credential inside n8n successfully
-
-YouTube node configuration:
-
-Operation: Upload
-Title: dynamic from Set Variables node
-Input Binary Field: datavideo (binary data from Read Video for YouTube node)
-Category: Education
-Region Code: US (required field — cannot be left empty)
-Description: dynamic from Set Variables node
-Privacy Status: Public
-
-Edit Airtable Fields 3 (Set Node):
-
-Reviewed node — already correctly configured, no changes needed
-Contains: ID, YouTube Status, Youtube URL fields
-Note: This is a Set node, not an Airtable node — no replacement needed
-
-Replacing Update YouTube Status - Success Node:
-
-Old node had broken expressions referencing deleted nodes
-Replaced with new Airtable → Update record node (new version auto-loads columns)
-Base: selected from list
-Table: Videos
-Columns to match on: id
-YouTube Status: Posted
-
-Challenges faced:
-
-YouTube OAuth2 does not reuse Google Drive credentials — requires separate credential setup
-YouTube Data API v3 must be enabled separately in Google Cloud Console
-Old expressions referenced "Update Airtable with Description" node which no longer exists in workflow
-New Airtable node uses dropdown for YouTube Status instead of free text — correct value: Posted
-Youtube URL column does not exist in Airtable table — skipped
 
 
 
 
-
-
-Day 8 — April 27, 2026
+## Day 6 — April 27, 2026
 Goal: Complete X (Twitter) & Pinterest Nodes + Attempt Instagram API Setup
 Adding new Airtable columns:
 
