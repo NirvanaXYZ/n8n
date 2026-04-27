@@ -154,8 +154,6 @@ New Airtable node uses dropdown for YouTube Status instead of free text — corr
 Youtube URL column does not exist in Airtable table — skipped
 
 
-
-
 Day 7 — April 24, 2026
 Goal: Replace YouTube Upload Node & Fix Airtable Nodes in YouTube Row
 Replacing the YouTube Upload Node:
