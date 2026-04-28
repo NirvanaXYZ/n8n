@@ -248,3 +248,76 @@ Try credit card verification if it becomes available
 
 Current Workflow Status
 PlatformStatusYouTube✅ CompleteX (Twitter)✅ CompletePinterest✅ CompleteInstagram❌ Blocked — Meta API verificationTikTok⏳ Waiting for API review approval
+
+
+## Day 9 — April 28, 2026
+
+### Goal: Fix Google Drive Trigger, Resolve TikTok API Rejection & Set Up Policy Pages
+
+---
+
+### TikTok API — Third Submission Attempt
+
+**Rejection reason from second submission:**
+- Missing Terms of Service accessible from homepage
+- Missing Privacy Policy accessible from homepage
+- Invalid Terms of Service and Privacy Policy links provided
+
+**Solution — Created dedicated policy pages on custom subdomain:**
+- Created new GitHub repository for hosting policy documents
+- Enabled GitHub Pages on main branch
+- Added CNAME DNS record in domain registrar pointing subdomain to GitHub Pages
+- Configured custom domain for the policies subdomain
+- SSL certificate issued automatically by GitHub Pages
+- Created `terms.html` — full Terms of Service page with branded styling
+- Created `privacy.html` — full Privacy Policy page with branded styling
+- Created `index.html` — landing page linking to both policy pages
+
+**Third TikTok submission:**
+- Updated Terms of Service URL with new hosted page
+- Updated Privacy Policy URL with new hosted page
+- Submitted for review — Status: In Review ⏳
+
+**Challenge — GitHub Pages serving HTML as plain text:**
+- First attempts showed raw unstyled text instead of rendered HTML
+- Root cause: content was pasted without proper HTML tags and DOCTYPE declaration
+- Fixed by replacing file content with complete valid HTML
+
+**Challenge — SSL certificate delay:**
+- After adding custom domain, HTTPS was unavailable for ~15 minutes
+- GitHub Pages automatically issues SSL certificate — required waiting period
+- Enforce HTTPS checkbox became available after certificate was issued
+
+---
+
+### Google Drive Trigger — Fixed ✅
+
+**Problem:**
+- Google Drive Trigger credential was expired
+- Error: authorization grant invalid, expired, or revoked
+
+**Fix:**
+- Reconnected Google Drive credential by re-authenticating with Google account
+- Credential successfully refreshed ✅
+
+**Additional fix — Updated trigger folder:**
+- Old template was pointing to a folder that didn't exist
+- Created new dedicated Google Drive folder for social media content
+- Updated Google Drive Trigger node to watch the new folder
+- Watch For: File Created
+- Poll Mode: Every Minute
+
+---
+
+### Current Workflow Status
+
+| Platform | Status |
+|----------|--------|
+| YouTube | ✅ Complete |
+| X (Twitter) | ✅ Complete |
+| Pinterest | ✅ Complete |
+| Instagram | ❌ Blocked — Meta Developer verification |
+| TikTok | ⏳ In Review — 3rd submission |
+| Google Drive Trigger | ✅ Fixed and reconnected |
+
+---
